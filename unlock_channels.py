@@ -262,3 +262,6 @@ def unlock_channels(custom=True):
     else:
         # If nothing selected
         cmds.warning("Please select the targets .")
+
+
+unlock_channels()
