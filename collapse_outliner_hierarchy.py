@@ -10,7 +10,7 @@ def get_focus_panel():
     return panel
 
 
-def expand_outliner_hierarchy(focus=False):
+def collapse_outliner_hierarchy(focus=False):
     sel = pm.ls(sl=True)
 
     # Store current focus panel
@@ -23,22 +23,28 @@ def expand_outliner_hierarchy(focus=False):
         for each in vis_panels:
             if "outlinerPanel" in each:
                 outliner_panels.append(each)
-            
+
     if outliner_panels:
         for each in outliner_panels:
-            # If focus = True, will only expand hierarchy for the focus outliner
+            # If focus = True, will only collapse hierarchy for the focus outliner
             if focus:
                 # If the outliner panel does not equal the current pannel, continue the loop
                 if each != current_panel:
                     continue
 
-            # Expand the outliner hierarchy for the selected node
+            # Collapse the outliner hierarchy for the selected node
             set_focus_panel(each)
+            
+            # If the user selected the node, will only collapse the selected node outliner hierarchy
             if sel:
-                pm.outlinerEditor(each, edit=True, eas=True)
+                pm.outlinerEditor(each, edit=True, eas=False)
+            
+            # If the user didn't select any node, will collapse all the node outliner hierarchy
+            else:
+                pm.outlinerEditor(each, edit=True, eai=False)
 
     # Return to previous focus panel
     set_focus_panel(current_panel)
 
 
-expand_outliner_hierarchy()
+collapse_outliner_hierarchy()
