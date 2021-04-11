@@ -24,15 +24,22 @@ def collapse_outliner_hierachy(focus=False):
             if "outlinerPanel" in each:
                 outliner_panels.append(each)
 
-    # Extend the selection item outliner hierachy
     if outliner_panels:
         for each in outliner_panels:
+            # If focus = True, will only collapse hierachy for the focus outliner
             if focus:
+                # If the outliner panel does not equal the current pannel, continue the loop
                 if each != current_panel:
                     continue
+
+            # Collapse the outliner hierachy for the selected node
             set_focus_panel(each)
+            
+            # If the user selected the node, will only collapse the selected node outliner hierachy
             if sel:
                 pm.outlinerEditor(each, edit=True, eas=False)
+            
+            # If the user didn't select any node, will collapse all the node outliner hierachy
             else:
                 pm.outlinerEditor(each, edit=True, eai=False)
 
