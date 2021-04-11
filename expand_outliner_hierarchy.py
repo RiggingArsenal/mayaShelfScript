@@ -26,13 +26,13 @@ def expand_outliner_hierarchy(focus=False):
             
     if outliner_panels:
         for each in outliner_panels:
-            # If focus = True, will only expand hierachy for the focus outliner
+            # If focus = True, will only expand hierarchy for the focus outliner
             if focus:
                 # If the outliner panel does not equal the current pannel, continue the loop
                 if each != current_panel:
                     continue
 
-            # Expand the outliner hierachy for the selected node
+            # Expand the outliner hierarchy for the selected node
             set_focus_panel(each)
             if sel:
                 pm.outlinerEditor(each, edit=True, eas=True)
