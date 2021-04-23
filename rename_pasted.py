@@ -3,8 +3,8 @@ import pymel.core as pm
 
 def remove_pasted_prefix(obj=None):
     # Remove the object name startswith 'pasted__'
-    if obj.startswith('pasted__'):
-        pm.rename(obj, pm.PyNode(obj.name().split('pasted__')[-1]))
+    if obj.name().split('|')[-1].startswith('pasted__'):
+        pm.mel.searchReplaceNames("pasted__", " ", "selected")
 
 
 def remove_suffix_int(obj=None):
@@ -30,13 +30,23 @@ def remove_suffix_int(obj=None):
     pm.rename(obj, check)
 
 
-def rename_prefix_pasted():
+def rename_pasted():
     sel = pm.ls(sl=True) or []
 
+    # Get sel list Hierarchy
+    selHier = pm.listRelatives(sel, ad=True, f=True)
+
+    # Combine sel and selHier list
+    sel = sel + selHier
+
+    # Select sel list Hierarchy
+    pm.select(sel)
+
+    # Rename pasted
     if sel:
         for each in sel:
             remove_pasted_prefix(each)
             remove_suffix_int(each)
 
 
-rename_prefix_pasted()
+rename_pasted()
