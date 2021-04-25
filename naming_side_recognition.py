@@ -60,5 +60,7 @@ def naming_side_recognition(l=[], r=[]):
                         pm.select(cl=True)
                         continue
 
+        pm.select(sel)
+
 
 naming_side_recognition()
